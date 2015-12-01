@@ -1,0 +1,22 @@
+# Domain
+
+  * User is on a project, but can have a different role on each project.
+  * To handle this we create a project_user_roles table that serves as a three way joins table.
+    * User has many projects through project_user_roles
+  * Project has many operations
+  * Operation has many work tickets
+  * User can be assigned to many work tickets
+    * A work ticket only gets worked by a single user
+    * All roles can be assigned a work ticket
+
+
+# Features Journey
+
+  * list of all projects a user has
+  * list all operations a user has
+  * list all work tickets a user has
+    * where the project is active
+  * list of all work tickets on an operation
+    * where the project is active
+    * where the user is a technician
+    * only show it when the current_user is an admin
