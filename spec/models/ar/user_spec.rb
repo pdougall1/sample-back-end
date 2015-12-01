@@ -6,4 +6,5 @@ describe AR::User, type: :model do
   it { is_expected.to respond_to :first_name }
   it { is_expected.to respond_to :last_name }
   it { is_expected.to respond_to :project_user_roles }
+  it { is_expected.to respond_to :projects }
 end
