@@ -11,7 +11,7 @@ describe Query::ActiveUserWorkTickets do
 
   context 'when the work ticket is active' do
     let(:active) { true }
-    it { is_expected.to eq [1] }
+    it { is_expected.to eq [work_ticket.id] }
   end
 
   context 'when the work ticket is not active' do
