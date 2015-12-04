@@ -14,8 +14,9 @@ describe Query::OperationWorkTickets do
   it { is_expected.to eq [work_ticket.id] }
 
   context 'when the ticket does not belong to the operation' do
-    let(:operation) { FactoryGirl.create(:ar_operation) }
-    it { is_expected.to eq [] }
+    let(:other_operation) { FactoryGirl.create(:ar_operation, project: project) }
+    let!(:other_work_ticket) { FactoryGirl.create(:ar_work_ticket, operation: other_operation) }
+    it { is_expected.to eq [work_ticket.id] }
   end
 
   context 'when the work ticket is not active' do
