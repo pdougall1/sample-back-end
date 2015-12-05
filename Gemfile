@@ -35,6 +35,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # to handle CORS of course
 gem 'rack-cors', :require => 'rack/cors'
 
+# for auth tokens
+gem 'scrypt'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
