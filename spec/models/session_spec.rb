@@ -1,12 +1,11 @@
-require 'spec_helper'
-require_relative '../../app/models/session'
-require_relative '../../app/models/auth_token'
+require 'rails_helper'
 
 describe Session do
   let(:auth_token) { AuthToken.new }
   let(:token_from_client) { auth_token.to_s }
-  let(:user) { instance_double('AR::User', hashed_auth_token: auth_token.to_hash) }
-  let(:session) { described_class.new(user) }
+  let(:email) { 'user@example.com' }
+  let(:user) { FactoryGirl.create(:ar_user, email: email, hashed_auth_token: auth_token.to_hash) }
+  let(:session) { described_class.new(user.email) }
 
   describe '#token_valid?(token_from_client)' do
     subject { session.token_valid?(token_from_client) }
