@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Session do
-  let(:auth_token) { AuthToken.new }
+  let(:auth_token) { Auth::Token.new }
   let(:token_from_client) { auth_token.to_s }
   let(:email) { 'user@example.com' }
   let(:user) { FactoryGirl.create(:ar_user, email: email, hashed_auth_token: auth_token.to_hash) }
@@ -12,7 +12,7 @@ describe Session do
     it { is_expected.to be true }
 
     context 'when auth_token is not valid' do
-      let(:token_from_client) { AuthToken.new.to_s }
+      let(:token_from_client) { Auth::Token.new.to_s }
       it { is_expected.to be false }
     end
   end

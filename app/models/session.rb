@@ -6,7 +6,7 @@ class Session
     new(user_identifier).create
   end
 
-  def initialize(user_identifier, token_factory: AuthToken, user_factory: AR::User)
+  def initialize(user_identifier, token_factory: Auth::Token, user_factory: AR::User)
     @user_factory = user_factory
     @token_factory = token_factory
     @user = find_user(user_identifier)

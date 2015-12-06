@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'scrypt'
-require_relative '../../app/models/auth_token'
+require_relative '../../../app/models/auth/token'
 
-describe AuthToken do
+describe Auth::Token do
   let(:random_str) { 'random_str' }
   let(:random_factory) { double('SecureRandom', base64: random_str) }
   let(:token) { described_class.new(random_factory: random_factory) }
