@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def create
     identifier = session_params[:identification]
     session = Session.create(identifier)
-    render json: session.response
+    render json: session.response, status: session.response_status
   end
 
   def destroy

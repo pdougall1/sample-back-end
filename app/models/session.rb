@@ -1,7 +1,9 @@
+require 'byebug'
+
 class Session
 
-  def self.create(user)
-    new(user).create
+  def self.create(user_identifier)
+    new(user_identifier).create
   end
 
   def initialize(user_identifier, token_factory: AuthToken, user_factory: AR::User)
@@ -17,7 +19,7 @@ class Session
 
   def create
     @token = @token_factory.new
-    @user.update_attributes!(hashed_authentication_token: @token.to_hash) if @user
+    @user.update_attributes!(hashed_auth_token: @token.to_hash) if @user
     self
   end
 
@@ -25,7 +27,15 @@ class Session
     if @user
       { authentication_token: @token, id: @user.id }
     else
-      [{ error: "Could not find a user with those credentials." }, status: :not_found]
+      { error: "Could not find a user with those credentials." }
+    end
+  end
+
+  def response_status
+    if @user
+      :ok
+    else
+      :not_found
     end
   end
 
