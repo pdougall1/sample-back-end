@@ -10,4 +10,18 @@ describe Auth::Password do
     subject { SCrypt::Password.new(password.to_s) }
     it { is_expected.to eq password_string }
   end
+
+  describe '#matches?(encypted_password)' do
+    context 'when they match' do
+      let(:hashed_password) { SCrypt::Password.create(password_string).to_s }
+      subject { password.matches?(hashed_password) }
+      it { is_expected.to be true }
+    end
+
+    context 'when they do not match' do
+      let(:hashed_password) { SCrypt::Password.create('not password').to_s }
+      subject { password.matches?(hashed_password) }
+      it { is_expected.to be false }
+    end
+  end
 end

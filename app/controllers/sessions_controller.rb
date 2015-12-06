@@ -5,7 +5,8 @@ class SessionsController < ApplicationController
 
   def create
     identifier = session_params[:identification]
-    session = Session.create(identifier)
+    password = session_params[:password]
+    session = Session.create(identifier, password)
     render json: session.response, status: session.response_status
   end
 

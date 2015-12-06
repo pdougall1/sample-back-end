@@ -2,11 +2,12 @@ require 'byebug'
 
 class Session
 
-  def self.create(user_identifier)
-    new(user_identifier).create
+  def self.create(user_identifier, password)
+    new(user_identifier, password).create
   end
 
-  def initialize(user_identifier, token_factory: Auth::Token, user_factory: AR::User)
+  def initialize(user_identifier, password, token_factory: Auth::Token, user_factory: AR::User)
+    @password = password
     @user_factory = user_factory
     @token_factory = token_factory
     @user = find_user(user_identifier)
@@ -15,6 +16,10 @@ class Session
   def token_valid?(token_from_client)
     user_token = @user.hashed_auth_token
     @token_factory.new(token_from_client).matches?(user_token)
+  end
+
+  def password_valid?(password)
+    Auth::Password.new(password).matches? @user.encrypted_password
   end
 
   def create
@@ -32,10 +37,13 @@ class Session
   end
 
   def response_status
-    if @user
+    case
+    when @user.nil?
+      :not_found
+    when password_valid?(@password)
       :ok
     else
-      :not_found
+      :unauthorized
     end
   end
 
